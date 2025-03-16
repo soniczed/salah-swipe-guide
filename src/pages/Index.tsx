@@ -1,6 +1,6 @@
 
 import React from "react";
-import VerticalSwiper from "@/components/VerticalSwiper";
+import HorizontalSwiper from "@/components/HorizontalSwiper";
 
 const Index = () => {
   return (
@@ -13,11 +13,11 @@ const Index = () => {
       </header>
       
       <main className="flex-1 overflow-hidden">
-        <VerticalSwiper />
+        <HorizontalSwiper />
       </main>
       
       <footer className="p-3 text-center text-xs text-gray-500 bg-white/80 backdrop-blur-sm border-t">
-        Swipe vertically to explore different prayers
+        Swipe horizontally to explore different prayers
       </footer>
     </div>
   );

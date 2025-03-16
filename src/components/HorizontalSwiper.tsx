@@ -1,11 +1,11 @@
 
 import React, { useState, useRef, useEffect } from "react";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { prayers, getCurrentPrayer } from "@/data/prayerData";
 import PrayerCard from "./PrayerCard";
 import { cn } from "@/lib/utils";
 
-const VerticalSwiper: React.FC = () => {
+const HorizontalSwiper: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -23,23 +23,23 @@ const VerticalSwiper: React.FC = () => {
 
   // Handle touch events
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientY);
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientY);
+    setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd || isAnimating) return;
     
     const distance = touchStart - touchEnd;
-    const isSwipeUp = distance > 50;
-    const isSwipeDown = distance < -50;
+    const isSwipeLeft = distance > 50;
+    const isSwipeRight = distance < -50;
     
-    if (isSwipeUp && currentIndex < prayers.length - 1) {
+    if (isSwipeLeft && currentIndex < prayers.length - 1) {
       navigateTo(currentIndex + 1);
-    } else if (isSwipeDown && currentIndex > 0) {
+    } else if (isSwipeRight && currentIndex > 0) {
       navigateTo(currentIndex - 1);
     }
     
@@ -77,29 +77,29 @@ const VerticalSwiper: React.FC = () => {
         ))}
       </div>
 
-      {/* Up/Down navigation buttons */}
+      {/* Left/Right navigation buttons */}
       <button
         className={cn(
-          "absolute left-1/2 transform -translate-x-1/2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-md border border-gray-200 transition-opacity duration-300",
+          "absolute top-1/2 transform -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-md border border-gray-200 transition-opacity duration-300",
           currentIndex <= 0 ? "opacity-50 cursor-not-allowed" : "opacity-100 hover:bg-gray-100",
-          "top-16"
+          "left-4"
         )}
         onClick={() => navigateTo(currentIndex - 1)}
         disabled={currentIndex <= 0 || isAnimating}
       >
-        <ChevronUp className="h-5 w-5 text-gray-700" />
+        <ChevronLeft className="h-5 w-5 text-gray-700" />
       </button>
 
       <button
         className={cn(
-          "absolute left-1/2 transform -translate-x-1/2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-md border border-gray-200 transition-opacity duration-300",
+          "absolute top-1/2 transform -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-md border border-gray-200 transition-opacity duration-300",
           currentIndex >= prayers.length - 1 ? "opacity-50 cursor-not-allowed" : "opacity-100 hover:bg-gray-100",
-          "bottom-16"
+          "right-4"
         )}
         onClick={() => navigateTo(currentIndex + 1)}
         disabled={currentIndex >= prayers.length - 1 || isAnimating}
       >
-        <ChevronDown className="h-5 w-5 text-gray-700" />
+        <ChevronRight className="h-5 w-5 text-gray-700" />
       </button>
 
       {/* Prayer cards container */}
@@ -107,27 +107,29 @@ const VerticalSwiper: React.FC = () => {
         ref={containerRef}
         className="h-full w-full transition-transform duration-400 ease-out"
         style={{
-          transform: `translateY(-${currentIndex * 100}%)`,
+          transform: `translateX(-${currentIndex * 100}%)`,
         }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {prayers.map((prayer, index) => (
-          <div
-            key={prayer.id}
-            className="h-full w-full snap-center"
-          >
-            <PrayerCard
-              prayer={prayer}
-              isCurrentPrayer={prayer.id === currentPrayerId}
-              index={index}
-            />
-          </div>
-        ))}
+        <div className="h-full flex">
+          {prayers.map((prayer, index) => (
+            <div
+              key={prayer.id}
+              className="h-full min-w-full snap-center"
+            >
+              <PrayerCard
+                prayer={prayer}
+                isCurrentPrayer={prayer.id === currentPrayerId}
+                index={index}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-export default VerticalSwiper;
+export default HorizontalSwiper;

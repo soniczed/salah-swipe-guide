@@ -76,7 +76,7 @@
 
   body {
     @apply bg-prayer-background text-foreground antialiased;
-    touch-action: pan-y;
+    touch-action: pan-x;
     overscroll-behavior: none;
   }
 
@@ -110,7 +110,7 @@
   @apply bg-prayer-primary/40 rounded-full;
 }
 
-/* Vertical swiper styling */
+/* Horizontal swiper styling */
 .swiper-container {
   @apply h-full w-full;
 }
