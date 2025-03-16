@@ -17,7 +17,7 @@ const Index = () => {
       </main>
       
       <footer className="p-3 text-center text-xs text-gray-500 bg-white/80 backdrop-blur-sm border-t">
-        Swipe horizontally to explore different prayers
+        Swipe horizontally to explore different prayers. Scroll vertically to see full content.
       </footer>
     </div>
   );
