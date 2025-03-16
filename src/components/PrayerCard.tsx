@@ -139,7 +139,7 @@ const PrayerCard: React.FC<PrayerCardProps> = ({
           </div>
           
           {/* Instructions Content */}
-          <div className="bg-gray-50 rounded-lg p-4 max-h-none overflow-visible">
+          <div className="bg-gray-50 rounded-lg p-4 mb-5">
             {activeTab === "steps" ? (
               <ol className="space-y-2 text-sm stagger-children">
                 {prayer.instructions.map((step, index) => (
@@ -152,16 +152,94 @@ const PrayerCard: React.FC<PrayerCardProps> = ({
                 ))}
               </ol>
             ) : (
-              <div className="text-sm space-y-3 stagger-children">
+              <div className="text-sm space-y-4 stagger-children">
                 <p className="text-gray-600">{prayer.additionalInfo}</p>
+                
+                {prayer.id === "tahajjud" && (
+                  <div className="bg-prayer-primary/5 rounded-lg p-3 border border-prayer-primary/10">
+                    <h4 className="font-medium text-prayer-primary mb-2">When to Recite in Tahajjud</h4>
+                    <p className="text-gray-600">
+                      Tahajjud prayer is performed after Isha prayer and before Fajr, preferably in the last third of the night. 
+                      After each pair of rakats, recite the Tashahhud (At-Tahiyyat). For longer surahs, recite them during the 
+                      first two rakats. It is recommended to start with a special dua for night prayer and conclude with witr prayer.
+                    </p>
+                  </div>
+                )}
+                
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-1">Final Dua</h4>
-                  <p className="font-arabic text-right mb-1">اللَّهُمَّ اغْفِرْ لِي</p>
-                  <p className="text-gray-600">Allahumma ghfir li (O Allah, forgive me)</p>
+                  <h4 className="font-medium text-gray-900 mb-2">Final Dua (Tashahhud)</h4>
+                  <div className="bg-white/80 rounded-lg p-3 border border-gray-100">
+                    <p className="font-arabic text-right text-lg leading-loose mb-2">
+                      التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ
+                    </p>
+                    <p className="text-gray-600 italic mb-2">
+                      At-tahiyyatu lillahi was-salawatu wat-tayyibatu, as-salamu 'alayka ayyuhan-nabiyyu wa rahmatullahi wa barakatuhu, as-salamu 'alayna wa 'ala 'ibadillahis-salihin, ash-hadu an la ilaha illallahu wa ash-hadu anna Muhammadan 'abduhu wa rasuluhu
+                    </p>
+                    <p className="text-gray-500 text-sm">
+                      "All greetings of humility are for Allah, and all prayers and goodness. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous slaves of Allah. I bear witness that there is no deity worthy of worship except Allah, and I bear witness that Muhammad is His slave and Messenger."
+                    </p>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Durood Ibrahim</h4>
+                  <div className="bg-white/80 rounded-lg p-3 border border-gray-100">
+                    <p className="font-arabic text-right text-lg leading-loose mb-2">
+                      اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ
+                    </p>
+                    <p className="text-gray-600 italic mb-2">
+                      Allahumma salli 'ala Muhammadin wa 'ala aali Muhammadin, kama sallayta 'ala Ibrahima wa 'ala aali Ibrahima, innaka Hamidum Majid. Allahumma barik 'ala Muhammadin wa 'ala aali Muhammadin, kama barakta 'ala Ibrahima wa 'ala aali Ibrahima, innaka Hamidum Majid
+                    </p>
+                    <p className="text-gray-500 text-sm">
+                      "O Allah, send prayers upon Muhammad and the family of Muhammad, as You sent prayers upon Ibrahim and the family of Ibrahim, You are indeed Worthy of Praise, Full of Glory. O Allah, send blessings upon Muhammad and the family of Muhammad, as You sent blessings upon Ibrahim and the family of Ibrahim, You are indeed Worthy of Praise, Full of Glory."
+                    </p>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Final Supplication</h4>
+                  <div className="bg-white/80 rounded-lg p-3 border border-gray-100">
+                    <p className="font-arabic text-right text-lg leading-loose mb-2">
+                      اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ
+                    </p>
+                    <p className="text-gray-600 italic mb-2">
+                      Allahumma inni a'udhu bika min 'adhabi jahannam, wa min 'adhabil-qabr, wa min fitnatil-mahya wal-mamat, wa min sharri fitnatil-masihid-dajjal
+                    </p>
+                    <p className="text-gray-500 text-sm">
+                      "O Allah, I seek refuge in You from the punishment of Hell, from the punishment of the grave, from the trials of living and dying, and from the evil of the trial of the False Messiah (Anti-Christ)."
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
           </div>
+          
+          {/* Full Surah Display */}
+          {activeTab === "steps" && (
+            <div className="space-y-5">
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-3">First Surah: {firstSurah.name}</h3>
+                <div className="bg-white/80 rounded-lg p-4 border border-gray-100">
+                  <p className="font-arabic text-right text-lg leading-loose mb-3">{firstSurah.arabicText}</p>
+                  <div className="border-t border-gray-100 pt-3">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-3">{firstSurah.transliteration}</p>
+                    <p className="text-gray-500 text-xs">{firstSurah.translation}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-3">Second Surah: {secondSurah.name}</h3>
+                <div className="bg-white/80 rounded-lg p-4 border border-gray-100">
+                  <p className="font-arabic text-right text-lg leading-loose mb-3">{secondSurah.arabicText}</p>
+                  <div className="border-t border-gray-100 pt-3">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-3">{secondSurah.transliteration}</p>
+                    <p className="text-gray-500 text-xs">{secondSurah.translation}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </ScrollArea>
     </div>
