@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Clock, Sun } from "lucide-react";
 import { Prayer } from "@/data/prayerData";
 import { Surah, surahs } from "@/data/surahData";
@@ -19,8 +19,9 @@ const PrayerCard: React.FC<PrayerCardProps> = ({
   isCurrentPrayer,
   index,
 }) => {
-  const [firstSurah, setFirstSurah] = useState<Surah>(surahs[0]);
-  const [secondSurah, setSecondSurah] = useState<Surah>(surahs[1]);
+  // Always set first Surah to Al-Fatihah
+  const alFatihah = surahs.find(surah => surah.id === "al-fatihah") || surahs[0];
+  const [secondSurah, setSecondSurah] = useState<Surah>(surahs.find(surah => surah.id !== "al-fatihah") || surahs[1]);
   const [activeTab, setActiveTab] = useState<"steps" | "completion">("steps");
 
   const RakatBlock = ({ type, count, color }: { type: string; count: number; color: string }) => (
@@ -92,21 +93,34 @@ const PrayerCard: React.FC<PrayerCardProps> = ({
             </div>
           </div>
           
-          {/* Surah Selection */}
+          {/* Al-Fatihah (First Surah - Always Shown) */}
           <div className="mb-5">
-            <h3 className="text-sm font-medium text-gray-900 mb-3">Surah Selection</h3>
+            <h3 className="text-sm font-medium text-gray-900 mb-3">First Surah: Al-Fatihah</h3>
+            <div className="bg-white/80 rounded-lg p-4 border border-gray-100">
+              <p className="font-arabic text-right text-lg leading-loose mb-3">{alFatihah.arabicText}</p>
+              <div className="border-t border-gray-100 pt-3">
+                <p className="text-gray-600 text-sm leading-relaxed mb-3">{alFatihah.transliteration}</p>
+                <p className="text-gray-500 text-xs">{alFatihah.translation}</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Second Surah Selection */}
+          <div className="mb-5">
+            <h3 className="text-sm font-medium text-gray-900 mb-3">Second Surah Selection</h3>
+            <SurahSelection
+              label="Choose Second Surah"
+              value={secondSurah}
+              onChange={setSecondSurah}
+              excludeSurahId="al-fatihah"
+            />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <SurahSelection
-                label="First Surah"
-                value={firstSurah}
-                onChange={setFirstSurah}
-              />
-              <SurahSelection
-                label="Second Surah"
-                value={secondSurah}
-                onChange={setSecondSurah}
-              />
+            <div className="mt-5 bg-white/80 rounded-lg p-4 border border-gray-100">
+              <p className="font-arabic text-right text-lg leading-loose mb-3">{secondSurah.arabicText}</p>
+              <div className="border-t border-gray-100 pt-3">
+                <p className="text-gray-600 text-sm leading-relaxed mb-3">{secondSurah.transliteration}</p>
+                <p className="text-gray-500 text-xs">{secondSurah.translation}</p>
+              </div>
             </div>
           </div>
           
@@ -213,33 +227,6 @@ const PrayerCard: React.FC<PrayerCardProps> = ({
               </div>
             )}
           </div>
-          
-          {/* Full Surah Display */}
-          {activeTab === "steps" && (
-            <div className="space-y-5">
-              <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-3">First Surah: {firstSurah.name}</h3>
-                <div className="bg-white/80 rounded-lg p-4 border border-gray-100">
-                  <p className="font-arabic text-right text-lg leading-loose mb-3">{firstSurah.arabicText}</p>
-                  <div className="border-t border-gray-100 pt-3">
-                    <p className="text-gray-600 text-sm leading-relaxed mb-3">{firstSurah.transliteration}</p>
-                    <p className="text-gray-500 text-xs">{firstSurah.translation}</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-3">Second Surah: {secondSurah.name}</h3>
-                <div className="bg-white/80 rounded-lg p-4 border border-gray-100">
-                  <p className="font-arabic text-right text-lg leading-loose mb-3">{secondSurah.arabicText}</p>
-                  <div className="border-t border-gray-100 pt-3">
-                    <p className="text-gray-600 text-sm leading-relaxed mb-3">{secondSurah.transliteration}</p>
-                    <p className="text-gray-500 text-xs">{secondSurah.translation}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </ScrollArea>
     </div>

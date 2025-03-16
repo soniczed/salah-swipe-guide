@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { ChevronDown } from "lucide-react";
 import { Surah, surahs } from "@/data/surahData";
 import { cn } from "@/lib/utils";
@@ -9,6 +9,7 @@ type SurahSelectionProps = {
   onChange: (surah: Surah) => void;
   value: Surah;
   className?: string;
+  excludeSurahId?: string;
 };
 
 const SurahSelection: React.FC<SurahSelectionProps> = ({
@@ -16,8 +17,13 @@ const SurahSelection: React.FC<SurahSelectionProps> = ({
   onChange,
   value,
   className,
+  excludeSurahId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  
+  const filteredSurahs = useMemo(() => {
+    return surahs.filter(surah => !excludeSurahId || surah.id !== excludeSurahId);
+  }, [excludeSurahId]);
 
   const handleSelect = (surah: Surah) => {
     onChange(surah);
@@ -51,7 +57,7 @@ const SurahSelection: React.FC<SurahSelectionProps> = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className="py-1">
-            {surahs.map((surah) => (
+            {filteredSurahs.map((surah) => (
               <div
                 key={surah.id}
                 className={cn(
@@ -66,17 +72,6 @@ const SurahSelection: React.FC<SurahSelectionProps> = ({
                 </span>
               </div>
             ))}
-          </div>
-        </div>
-      )}
-
-      {value && !isOpen && (
-        <div className="mt-3 p-3 bg-white/70 backdrop-blur-sm rounded-lg border border-gray-100 animate-fade-in card-shadow">
-          <div className="arabic-text text-lg leading-relaxed mb-2">
-            {value.arabicText.split("\n")[1]}
-          </div>
-          <div className="text-sm text-gray-600">
-            {value.transliteration.split("\n")[1]}
           </div>
         </div>
       )}
